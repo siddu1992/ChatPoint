@@ -1,0 +1,87 @@
+<input type="text" placeholder="Enter Product Namee" (keyup)="filterproduct($event)" >
+<!-- <button (click)="filterproduct()">Filter</button> -->
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">category</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of filterprod ">
+        <td>{{obj.productId}}</td>
+        <td>{{obj.productName}}</td>
+        <td>{{obj.productPrice}}</td>
+        <td>{{obj.productCategory}}</td>
+        <td><button (click)="openPopup(obj)">Update</button> <button (click)="conformdel(obj._id)">Delete</button></td>
+
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <div class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{'display':displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">update product details</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="productForm" (ngSubmit)="update()">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="productName"
+              formControlName="productName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Product Price</label>
+            <input
+              type="number"
+              class="form-control"
+              id="productPrice"
+              formControlName="productPrice"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="productId" class="form-label">Product Id</label>
+            <input
+              type="number"
+              class="form-control"
+              id="productId"
+              formControlName="productId"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="productCategory" class="form-label">Product Category</label>
+            <input
+              type="text"
+              class="form-control"
+              id="productCategory"
+              formControlName="productCategory"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Update</button>
+        </form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,10 @@
+<div class="input-group mb-3">
+    <input type="text" class="form-control"  aria-describedby="button-addon2" #name>
+    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="createname(name.value)">Create ChatBox</button>
+  </div>
+  
+<div *ngFor="let obj of allboxs">
+     <p (click)="enter(obj._id)">{{obj.name}}</p>
+</div>
+
+  

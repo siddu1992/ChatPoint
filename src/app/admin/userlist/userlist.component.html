@@ -1,0 +1,85 @@
+<input type="text" placeholder="Enter User Name" (keyup)="userlis($event)">
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">email</th>
+        <th scope="col">location</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of userlists">
+        <td>{{obj.userId}}</td>
+        <td>{{obj.userName}}</td>
+        <td>{{obj.useremail}}</td>
+        <td>{{obj.userlocation}}</td>
+        <td><button (click)="openPopup(obj)">Update</button> <button (click)="conformdel(obj._id)">Delete</button></td>
+ 
+      </tr>
+    </tbody>
+  </table>
+
+
+
+  <div class="modal"
+  tabindex="-1"
+  role="dialog"
+  [ngStyle]="{'display':displayStyle}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">update user details</h4>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="userForm" (ngSubmit)="update()">
+          <div class="mb-3">
+            <label for="userName" class="form-label">user Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              formControlName="userName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="useremail" class="form-label">user Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="useremail"
+              formControlName="useremail"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userId" class="form-label">user Id</label>
+            <input
+              type="number"
+              class="form-control"
+              id="userId"
+              formControlName="userId"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userlocation" class="form-label">user Location</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userlocation"
+              formControlName="userlocation"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Update</button>
+        </form>
+  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" 
+                (click)="closePopup()">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

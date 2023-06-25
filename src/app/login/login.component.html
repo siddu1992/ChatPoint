@@ -1,0 +1,22 @@
+<form [formGroup]="userForm" (ngSubmit)="userlogin()">
+    <div class="mb-3">
+      <label for="useremail" class="form-label">user Email</label>
+      <input
+        type="text"
+        class="form-control"
+        id="useremail"
+        formControlName="useremail"
+      />
+    </div>
+    <div class="mb-3">
+        <label for="userpassword" class="form-label">user Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="userpassword"
+          formControlName="userpassword"
+        />
+       
+      </div>
+      <button type="submit" [disabled]="!userForm.valid">Submit</button>
+    </form>

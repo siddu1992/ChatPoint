@@ -1,0 +1,71 @@
+<div class="container">
+    <legend>Job Portal</legend>
+    <div class="row">
+      <div class="col col-md-8" style="overflow-y: scroll; max-height: 100vh">
+        <form [formGroup]="userForm" (ngSubmit)="save()">
+          <div class="mb-3">
+            <label for="userName" class="form-label">user Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userName"
+              formControlName="userName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userpassword" class="form-label">user Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="userpassword"
+              formControlName="userpassword"
+            />
+           
+          </div>
+          <div class="mb-3">
+            <label for="userId" class="form-label">user Id</label>
+            <input
+              type="number"
+              class="form-control"
+              id="userId"
+              formControlName="userId"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="useremail" class="form-label">user Email</label>
+            <input
+              type="text"
+              class="form-control"
+              id="useremail"
+              formControlName="useremail"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="userrole" class="form-label">user Role</label>
+            <select type="text"
+            class="form-control"
+            id="userrole"
+            formControlName="userrole">
+
+            <option *ngFor="let roles of userroles" value="{{roles.value}}">{{roles.name}}</option>
+          </select>
+          </div>
+         
+          
+          <div class="mb-3">
+            <label for="userlocation" class="form-label">user location</label>
+            <input
+              type="text"
+              class="form-control"
+              id="userlocation"
+              formControlName="userlocation"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
+        </form>
+      </div>
+      <!-- <div class="col col-md-4">
+        <div style="position: fixed">{{ preview }}</div>
+      </div> -->
+    </div>
+  </div>
