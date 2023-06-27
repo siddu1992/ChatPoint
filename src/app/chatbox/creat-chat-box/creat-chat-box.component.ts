@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartserviceService } from 'src/app/service/cartservice.service';
+import { Subject } from 'rxjs';
 import { ChatserveService } from 'src/app/service/chatserve.service';
 
 @Component({
@@ -9,7 +9,6 @@ import { ChatserveService } from 'src/app/service/chatserve.service';
   styleUrls: ['./creat-chat-box.component.scss']
 })
 export class CreatChatBoxComponent implements OnInit{
-  
   displayname :any;
   allboxs: any;
 constructor(public chatservice:ChatserveService,public route:Router){}
@@ -24,12 +23,13 @@ constructor(public chatservice:ChatserveService,public route:Router){}
    
       this.chatservice.saveChatroom({name:name}).subscribe((res:any)=>{
        localStorage.setItem("chatboxname",name)
-        this.route.navigateByUrl("/chatbox");
+        // this.route.navigateByUrl("/chatbox");
   
       },
       (error:any)=>{
           alert("chat room aleardy exists")  
       });
+
     
   }
 
@@ -46,10 +46,15 @@ constructor(public chatservice:ChatserveService,public route:Router){}
       );
     
   }
-  enter(_id:any){
-    localStorage.setItem("room_id",_id)
-    this.route.navigateByUrl("/chatbox")
+  enter(roomid:any,name:any){
+    
+    this.chatservice.joinRoom(roomid);
+
+    this.chatservice.sendMesstoUser({roomid:roomid,roomname:name});
+
 
   }
+
+  
   }
   

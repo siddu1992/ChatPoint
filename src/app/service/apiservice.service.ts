@@ -7,7 +7,7 @@ import { map } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiserviceService {
-baseUrl:any="http://192.168.1.4:4000/"
+baseUrl:any="http://192.168.1.2:4000/"
   constructor(private http:HttpClient) {
 
    }

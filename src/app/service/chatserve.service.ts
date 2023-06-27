@@ -7,9 +7,12 @@ import { io } from 'socket.io-client';
   providedIn: 'root'
 })
 export class ChatserveService {
-  barseurl:any="http://192.168.1.4:4000/chat/"
+  barseurl:any="http://192.168.1.2:4000"
+  
 
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
+  public chattoUserList : BehaviorSubject<string> = new BehaviorSubject('message');
+
   userdetails:any;
   jwt: any;
   id: any;
@@ -23,7 +26,7 @@ export class ChatserveService {
 
 
   
-  socket = io("http://192.168.1.4:4000", {
+  socket = io(this.barseurl, {
     
     reconnectionDelayMax: 10000,
     auth: {
@@ -38,7 +41,7 @@ export class ChatserveService {
 
   saveChatroom (product:any){
     
-    return this.http.post<any>(this.barseurl+"create",product)
+    return this.http.post<any>(this.barseurl+"/chat/create",product)
     .pipe(map((res:any)=>{
       return res;
     }))
@@ -46,7 +49,7 @@ export class ChatserveService {
 
    getAllchatrooms (){
     
-    return this.http.get<any>(this.barseurl+"allchats")
+    return this.http.get<any>(this.barseurl+"/chat/allchats")
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -54,19 +57,16 @@ export class ChatserveService {
    
    
 
-  public joinRoom(_id:any){
+  public  joinRoom(_id:any){
     console.log('joinRoom: ', _id)
    this.socket.emit('joinRoom', _id);
    return "success"
   }
 
-  public sendMessage(message: any) {
-    console.log('sendMessage: ', message)
-    this.socket.emit('newMessage', message);
-  }
 
-  public getNewMessage(chatroomId:any,msg:any) {
-    this.socket.emit('chatroomMessage',{chatroomId:chatroomId,message: msg});
+
+  public sendMesaage(chatroomId:any,msg:any,uni:any,imgname:any) {
+    this.socket.emit('chatroomMessage',{chatroomId:chatroomId,message: msg,img:uni,imgname:imgname});
 
      return this.message$.asObservable();
   };
@@ -83,10 +83,16 @@ export class ChatserveService {
 
   getAllboxMesages (rid:any,userId:any){
     
-    return this.http.get<any>(this.barseurl+"messages?chatId="+rid+"&userId="+userId)
+    return this.http.get<any>(this.barseurl+"/chat/messages?chatId="+rid+"&userId="+userId)
     .pipe(map((resp:any)=>{
       return resp
     }))
    }
+
+sendMesstoUser(messuser:any){
+this.chattoUserList.next(messuser);
+
+}
+
 
 }

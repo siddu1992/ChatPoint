@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthgaurdGuard } from './authgaurd.guard';
 import { ChatBoxComponent } from './chatbox/chat-box/chat-box.component';
 import { CreatChatBoxComponent } from './chatbox/creat-chat-box/creat-chat-box.component';
+import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
 
 const routes: Routes = [
   {path:"", redirectTo:"/login", pathMatch:'full'},
@@ -23,7 +24,9 @@ const routes: Routes = [
   {path:"productlist", component:ProductlistComponent,  canActivate:[AuthgaurdGuard]},
   {path:"userlist", component:UserlistComponent,  canActivate:[AuthgaurdGuard]},
   {path:"createchatbox", component:CreatChatBoxComponent,  canActivate:[AuthgaurdGuard]},
-  {path:"chatbox", component:ChatBoxComponent,  canActivate:[AuthgaurdGuard]}
+  {path:"chatbox", component:ChatBoxComponent,  canActivate:[AuthgaurdGuard]},
+  {path:"chatusers", component:ChatUsersComponent,  canActivate:[AuthgaurdGuard]}
+
 
 
   

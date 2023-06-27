@@ -22,6 +22,7 @@ import { AuthgaurdGuard } from './authgaurd.guard';
 import { CreatChatBoxComponent } from './chatbox/creat-chat-box/creat-chat-box.component';
 import { ChatBoxComponent } from './chatbox/chat-box/chat-box.component';
 import { ChatserveService } from './service/chatserve.service';
+import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ChatserveService } from './service/chatserve.service';
     DashboardComponent,
     LoginComponent,
     CreatChatBoxComponent,
-    ChatBoxComponent
+    ChatBoxComponent,
+    ChatUsersComponent
   ],
   imports: [
     BrowserModule,

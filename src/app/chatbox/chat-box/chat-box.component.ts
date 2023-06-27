@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { async } from 'rxjs';
 import { ChatserveService } from 'src/app/service/chatserve.service';
 
 @Component({
@@ -8,42 +10,69 @@ import { ChatserveService } from 'src/app/service/chatserve.service';
 })
 export class ChatBoxComponent implements OnInit{
   msg:any=[];
-
-constructor(public chatservice:ChatserveService){}
+  imageSrc:any;
+  imageresult: any;
+  bytes: any;
+  imagesUlr:any="http://192.168.1.2:4000/images/"
+  roomid: any;
+  imgbox :any;
+  typebox :any;
   
+
+constructor(public chatservice:ChatserveService, public router:Router){}
+messdis: any;
   displaymes :any;
 
     ngOnInit() {
       this.allBOxmessages();
       this.join();
       this.allNewMessage();
+
+
+      this.chatservice.chattoUserList.subscribe((mesval:any)=>{
+        this.messdis = mesval.roomname;
+        this.roomid = mesval.roomid;
+        this.msg = []
+        this.allBOxmessages();
+
+
+      })
     }
   
-    sendmess(mes:any) {
-      let room_id= localStorage.getItem("room_id");
-      this.displaymes = mes;
-      this.chatservice.sendMessage({ room_id, mes })
   
-    }
 
-    getNewMessage(msg:any) {
+    sendMessage(msg:any) {
+if(this.bytes==undefined){
+  this.bytes=[],
+  this.bytes["name"]=""
+}
 
-      let room_id= localStorage.getItem("room_id");
-      this.chatservice.getNewMessage(room_id,msg).subscribe(res=>{
+
+      this.chatservice.sendMesaage(this.roomid,msg,this.bytes,this.bytes["name"]).subscribe(res=>{
 console.log("res----",res)
-this.allNewMessage();
+this.bytes=[],
+this.bytes["name"]=""
+this.typebox = ""
+this.imgbox = ""
       },(err:any)=>{
 console.log(err)
       });
+
+     // this.chatservice.sendMesstoUser(msg);
+     // console.log(msg)
+     // this.router.navigateByUrl('/chatusers')
+
   
     }
 
     allNewMessage() {
 
-      let room_id= localStorage.getItem("room_id");
-      this.chatservice.allNewMessage().subscribe(res=>{
+      this.chatservice.allNewMessage().subscribe((res:any)=>{
 if(!this.msg.includes(res)){
-  this.msg.push(res);
+
+     this.msg.push(res)
+
+  
 
 }
 console.log("res----",res)
@@ -58,16 +87,14 @@ console.log(err)
 
 
     join(){
-    let room_id= localStorage.getItem("room_id");
-      this.chatservice.joinRoom(room_id)
+      this.chatservice.joinRoom(this.roomid)
     }
 
 
     allBOxmessages() {
 
-      let room_id= localStorage.getItem("room_id");
       let userId=JSON.parse(String(localStorage.getItem("userdetails"))).id
-      this.chatservice.getAllboxMesages(room_id,userId).subscribe((res:any)=>{
+      this.chatservice.getAllboxMesages(this.roomid,userId).subscribe((res:any)=>{
         console.log("resalll",res);
         for(let obj of res)
         {
@@ -82,6 +109,28 @@ console.log(err)
 console.log(err)
       });
   
+    }
+
+
+
+    onFileChange(event:any) {
+      const reader = new FileReader();
+      
+      if(event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        this.bytes=event.target.files[0]
+        reader.readAsDataURL(file);
+      
+        reader.onload = () => {
+          this.imageresult=reader.result
+          //this.bytes = new Uint8Array(this.imageresult);
+          console.log("bytes",this.bytes["name"])
+         this.imageSrc = reader.result as string;
+         
+     
+        };
+     
+      }
     }
 
 }

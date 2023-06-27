@@ -1,10 +1,52 @@
-
-<div *ngFor="let obj of msg">
-    <p >{{obj.userName}}   <span>  <p >{{obj.message}}</p></span></p>
+<div class="chat-page">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3 sidebar p-4">
+<app-creat-chat-box></app-creat-chat-box>
 </div>
+<div class="col-9 main-content">
 
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control" aria-describedby="button-addon2" #mess placeholder="Type Message">
-    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="getNewMessage(mess.value)">Send</button>
+    <div class="container-fluid h-100 p-0">
+        <div class="row h-100">
+          <div class="col p-0">
+            <div class="message-content overflow-auto">
+                <div class="sticky-top primary p-3"><h5>{{messdis}}</h5></div>
+                <div  class="messbox overflow-auto p-2">
+            <div *ngFor="let obj of msg">
+                <p>{{obj.userName}}</p>
+                <p>{{obj.message}}</p>
+
+                <div *ngIf="obj.fileName !=''">
+                    <img  src="{{imagesUlr}}{{obj.fileName}}">
+
+                </div>
+            </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row message-input">
+          <div class="col">
+            <div class="input-container">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" aria-describedby="button-addon2" #mess placeholder="Type Message" [(ngModel)]="typebox">
+                    <input 
+                    id="file" 
+                    type="file" 
+                    class="form-control"
+                    (change)="onFileChange($event)" [(ngModel)]="imgbox">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="sendMessage(mess.value)">Send</button>
+                  </div>            </div>
+          </div>
+        </div>
+      </div>
+      
+
+    
+
+
   </div>
+    </div>
+    </div>
+</div>

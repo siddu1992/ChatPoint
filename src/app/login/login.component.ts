@@ -31,13 +31,13 @@ export class LoginComponent implements OnInit{
       localStorage.setItem("userdetails", JSON.stringify(this.userdetails));
       localStorage.setItem("loggedin","true");
       // this.route.navigateByUrl("/dashboard")
-      this.route.navigateByUrl("/createchatbox")
+      this.route.navigateByUrl("/chatbox")
 
       console.log(this.token);
 
     },
     (error:any)=>{
-      alert("invalid username or password");
+      alert("invalid Email or password");
       localStorage.setItem("loggedin","false");
 
     }
