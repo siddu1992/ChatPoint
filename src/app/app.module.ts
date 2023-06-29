@@ -23,6 +23,8 @@ import { CreatChatBoxComponent } from './chatbox/creat-chat-box/creat-chat-box.c
 import { ChatBoxComponent } from './chatbox/chat-box/chat-box.component';
 import { ChatserveService } from './service/chatserve.service';
 import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
     LoginComponent,
     CreatChatBoxComponent,
     ChatBoxComponent,
-    ChatUsersComponent
+    ChatUsersComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,9 @@ import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
     FormsModule,
     HttpClientModule, 
     ReactiveFormsModule,
+    PickerModule,
+    NgbModule
+    
 
   ],
   providers: [ApiserviceService, CartserviceService,ChatserveService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }, AuthgaurdGuard],

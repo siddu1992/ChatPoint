@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { io } from 'socket.io-client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatserveService {
-  barseurl:any="http://192.168.1.2:4000"
+  barseurl:any="http://192.168.1.6:4000"
   
 
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
-  public chattoUserList : BehaviorSubject<string> = new BehaviorSubject('message');
+  public chattoUserList : BehaviorSubject<string> = new BehaviorSubject('');
 
   userdetails:any;
   jwt: any;
@@ -37,6 +37,25 @@ export class ChatserveService {
      // "token":"gJWT "+this.jwt
     }
   });
+
+
+
+  authenticate(userId: string): void {
+    this.socket.emit('authenticate', userId);
+  }
+
+  sendindividualMsg(recipientId: string, message: string): void {
+    this.socket.emit('individualMsg', {recipientId: recipientId,message: message });
+  }
+
+  receiveindividualMsg(): Observable<any> {
+    return new Observable<any>(observer => {
+      this.socket.on('individualMsg', (data: any) => observer.next(data));
+    });
+  }
+
+
+
 
 
   saveChatroom (product:any){
@@ -72,7 +91,7 @@ export class ChatserveService {
   };
 
   public allNewMessage = () => {
-    this.socket.on('newMessage', (message) =>{
+    this.socket.on('newMessage', (message:any) =>{
       console.log("message all",message);
       this.message$.next(message);
     });

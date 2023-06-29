@@ -1,1 +1,8 @@
-{{messdis}}
+
+<div class="container">
+    <div class="row">
+<ng-container *ngFor="let obj of filteruser">
+        <p *ngIf="userid != obj._id" (click)="enter(obj._id, obj.userName)">{{obj.userName}}</p>
+</ng-container>
+</div>
+</div>

@@ -3,15 +3,15 @@
     <div class="row">
         <div class="col-3 sidebar p-4">
 <app-creat-chat-box></app-creat-chat-box>
+<app-chat-users></app-chat-users>
 </div>
 <div class="col-9 main-content">
-
 
     <div class="container-fluid h-100 p-0">
         <div class="row h-100">
           <div class="col p-0">
-            <div class="message-content overflow-auto">
-                <div class="sticky-top primary p-3"><h5>{{messdis}}</h5></div>
+            <div class="message-content overflow-auto" #target>
+                <div class="sticky-top primary p-3"><h5>{{roomname}}</h5></div>
                 <div  class="messbox overflow-auto p-2">
             <div *ngFor="let obj of msg">
                 <p>{{obj.userName}}</p>
@@ -24,20 +24,41 @@
             </div>
             </div>
             </div>
+            <div>
+         
+ </div>
           </div>
+          
         </div>
+    
+
+     
         <div class="row message-input">
+
+         <ng-template #template>
+          
+  <emoji-mart  [set]="set" (emojiClick)="addEmoji($event)"> 
+  </emoji-mart>
+         </ng-template>
+          
+      
           <div class="col">
             <div class="input-container">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" aria-describedby="button-addon2" #mess placeholder="Type Message" [(ngModel)]="typebox">
+                    <input type="text" (focus)="onFocus()" class="form-control" aria-describedby="button-addon2" #mess placeholder="Type Message" [(ngModel)]="typebox">
                     <input 
                     id="file" 
                     type="file" 
                     class="form-control"
                     (change)="onFileChange($event)" [(ngModel)]="imgbox">
+
+                  <i (click)="openEmoji()" class="fa fa-smile-o emo" aria-hidden="true"></i>
+                         
                     <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="sendMessage(mess.value)">Send</button>
-                  </div>            </div>
+                  </div>   
+
+                </div>
+
           </div>
         </div>
       </div>

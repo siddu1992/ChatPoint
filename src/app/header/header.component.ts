@@ -10,8 +10,11 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit{
   searchTerm: any;
   totalItem :any;
+  name: any;
 constructor(private cartservice:CartserviceService, public router:Router){}
   ngOnInit() {
+    let user = JSON.parse(String(localStorage.getItem("userdetails")));
+this.name=user.Name;
     this.cartservice.getproducts().subscribe(res=>{
       this.totalItem = res.lenght;
     })

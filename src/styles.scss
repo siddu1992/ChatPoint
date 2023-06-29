@@ -3,3 +3,12 @@
 .secondary {background-color: #b11111;color:#fff}
 .primary:hover {background-color: #3fb9ea;color:#000;}
 .secondary:hover {background-color: #cf1f1f;color:#fff}
+
+@import '@ctrl/ngx-emoji-mart/picker';
+
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';

@@ -50,7 +50,7 @@ constructor(public chatservice:ChatserveService,public route:Router){}
     
     this.chatservice.joinRoom(roomid);
 
-    this.chatservice.sendMesstoUser({roomid:roomid,roomname:name});
+    this.chatservice.sendMesstoUser({roomid:roomid,roomname:name,type:2});
 
 
   }
