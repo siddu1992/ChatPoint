@@ -58,6 +58,7 @@ export class ProductlistComponent implements OnInit{
     
     this.productForm.patchValue(obj);
   }
+  
   closePopup() {
     this.displayStyle = "none";
   }

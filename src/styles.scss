@@ -1,8 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-.primary {background-color: #0daff1;color:#000;}
-.secondary {background-color: #b11111;color:#fff}
-.primary:hover {background-color: #3fb9ea;color:#000;}
-.secondary:hover {background-color: #cf1f1f;color:#fff}
+.bgc-primary {background-color: #171620;color:#fff;}
+.bgc-secondary {background-color: #48b5e8;color:#000}
+.bgc-dark {background-color: #171620;color:#fff;}
+.bgc-light {background-color: #f1ecec}
+.btn-primary {background-color: #171620;color:#fff;}
+.btn-primary:hover {background-color: #242429;color:#fff;}
+.btn-secondary:hover {background-color: #48b5e8;color:#000}
 
 @import '@ctrl/ngx-emoji-mart/picker';
 
@@ -12,3 +15,6 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

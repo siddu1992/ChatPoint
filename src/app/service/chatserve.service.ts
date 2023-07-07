@@ -7,19 +7,17 @@ import { io } from 'socket.io-client';
   providedIn: 'root'
 })
 export class ChatserveService {
-  barseurl:any="http://192.168.1.6:4000"
+  barseurl:any="http://192.168.1.5:4000"
   
+  public acctive$: BehaviorSubject<string> = new BehaviorSubject('');
 
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   public chattoUserList : BehaviorSubject<string> = new BehaviorSubject('');
 
-  userdetails:any;
-  jwt: any;
-  id: any;
+ 
   constructor(private http:HttpClient) {
     
-    this.userdetails=localStorage.getItem("userdetails");
-    this.id = JSON.parse(this.userdetails).id;
+  
    // this.jwt = localStorage.getItem("mytoken");
 
   }
@@ -44,8 +42,8 @@ export class ChatserveService {
     this.socket.emit('authenticate', userId);
   }
 
-  sendindividualMsg(recipientId: string, message: string): void {
-    this.socket.emit('individualMsg', {recipientId: recipientId,message: message });
+  sendindividualMsg(logInuserId:any,recipientId: string, message: string,img:any,imgname:any): void {
+    this.socket.emit('individualMsg', {sender:logInuserId,recipientId: recipientId,message: message,img:img,imgname:imgname });
   }
 
   receiveindividualMsg(): Observable<any> {
@@ -58,17 +56,17 @@ export class ChatserveService {
 
 
 
-  saveChatroom (product:any){
+  saveChatroom (group:any){
     
-    return this.http.post<any>(this.barseurl+"/chat/create",product)
+    return this.http.post<any>(this.barseurl+"/chat/create",group)
     .pipe(map((res:any)=>{
       return res;
     }))
    }
 
-   getAllchatrooms (){
+   getAllchatrooms (obj:any){
     
-    return this.http.get<any>(this.barseurl+"/chat/allchats")
+    return this.http.post<any>(this.barseurl+"/chat/allchats",obj)
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -112,6 +110,41 @@ sendMesstoUser(messuser:any){
 this.chattoUserList.next(messuser);
 
 }
+Activechatlogs(loginUser:any,recipient:any){
+  this.socket.emit('getChatLogs', {
+    user1: loginUser,
+    user2: recipient
+  });
+}
 
 
+
+ActiveUsersList(): Observable<any>{
+  return new Observable<any>(observer1 => {
+    this.socket.on('userList', (userList: any) => observer1.next(userList));
+  });
+
+
+  
+} 
+getchatLogs(): Observable<any>{
+  return new Observable<any>(observer1 => {
+    this.socket.on('chatLogs', (loglist: any) => observer1.next(loglist));
+  }); 
+}  
+
+individualChat(senderId:any,receaverId:any){
+  return this.http.get<any>(this.barseurl+"/chat/allIndividulChat?receaverId="+receaverId+"&senderId="+senderId)
+  .pipe(map((resp:any)=>{
+    return resp
+  }))}
+
+
+
+  addMeberTogroup(roomid:any,members:any):Observable<any>{
+    return this.http.post<any>(this.barseurl+"/chat/addMeberTogroup",{members:members,roomid:roomid})
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
 }

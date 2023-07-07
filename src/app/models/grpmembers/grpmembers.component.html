@@ -1,0 +1,10 @@
+<p (click)="onNoClick()" class="pt-1 ps-2"><i class="fa fa-times" aria-hidden="true"></i></p>
+<h2 mat-dialog-title>Group Members</h2>
+<!-- <mat-dialog-content class="mat-typography"> -->
+    <div style="padding: 30px">
+    
+  <div *ngFor="let obj of participants">
+    <ul><li>{{obj.userName}}</li></ul>
+  </div>
+ 
+    </div>

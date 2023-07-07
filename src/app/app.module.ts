@@ -25,6 +25,16 @@ import { ChatserveService } from './service/chatserve.service';
 import { ChatUsersComponent } from './chatbox/chat-users/chat-users.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { CompressImageService } from './service/comptressImageService';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogModule} from '@angular/cdk/dialog';
+import { AddUsersComponent } from './models/add-users/add-users.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { GrpmembersComponent } from './models/grpmembers/grpmembers.component';
+import { ViewimageComponent } from './models/viewimage/viewimage.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +52,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CreatChatBoxComponent,
     ChatBoxComponent,
     ChatUsersComponent,
+    AddUsersComponent,
+    GrpmembersComponent,
+    ViewimageComponent,
 
   ],
   imports: [
@@ -51,11 +64,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule, 
     ReactiveFormsModule,
     PickerModule,
-    NgbModule
-    
+    NgbModule,
+    BrowserAnimationsModule,
+    DialogModule,
+    MatSelectModule,
+    MatDialogModule,
+    NgMultiSelectDropDownModule.forRoot()
+
 
   ],
-  providers: [ApiserviceService, CartserviceService,ChatserveService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }, AuthgaurdGuard],
+  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},ApiserviceService,    CompressImageService,
+    CartserviceService,ChatserveService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }, AuthgaurdGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

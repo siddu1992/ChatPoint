@@ -1,8 +1,11 @@
 
 <div class="container">
     <div class="row">
-<ng-container *ngFor="let obj of filteruser">
-        <p *ngIf="userid != obj._id" (click)="enter(obj._id, obj.userName)">{{obj.userName}}</p>
+<ng-container *ngFor="let obj of users">
+    <div *ngIf="userid != obj._id" class="p-3 btn-primary" [ngStyle]="{'background-color':color[obj._id]}" (click)="enter(obj._id, obj.userName)">
+        <p class="m-0">{{obj.userName | titlecase }} <span *ngIf="obj.active==1"><span  class="dot"></span>
+        </span></p>
+    </div>
 </ng-container>
 </div>
 </div>

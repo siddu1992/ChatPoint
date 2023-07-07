@@ -1,20 +1,14 @@
-<header class="sticky-top">
-    <div class="navbar navbar-dark bg-secondary shadow-sm p-0 ps-4 pe-4">
-        <div class="navbar-brand align-item-center d-flex">
-            <div class="logo-img"><img src="assets/images/cp-logo.png" alt="logo"></div>
-
-            <!-- <div class="form-group">
-                <input type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="search()" placeholder="search products">
-            </div>
-            <span class="fas fa-search search-icon"></span> -->
-
+<header class="sticky-top bgc-primary shadow-sm p-2 ps-4 pe-4">
+    <div class="navbar navbar-dark  flex-fill d-flex">
+        <div class="navbar-name">
+            <!-- <div class="logo-img"><img src="assets/images/cp-logo.png" alt="logo"></div> -->
+            <h5 class="text-white"> {{name  | titlecase}}</h5>
+            
+            <input type="text" placeholder="Search" (input)="onSearch($event)" class="btn-no-outline p-2 text-dark rounded-2">
 
         </div>
-        <!-- <button routerLink="cart" class="btn btn-primary">
-            <i style="font-size: 30px;" class="fas fa-cart-plus"></i>
-            <div style="font-size: 10px;" class="badge bg-danger">{{totalItem}}</div>
-        </button> -->
-       <h3> {{name}}</h3>
-        <button (click)="logout()" class="secondary p-1 btn-no-outline ps-3 pe-3">Sign Out</button>
+        <i (click)="logout()" class="fa fa-power-off" aria-hidden="true" ngbTooltip="signout"></i>
     </div>
+   
+
 </header>

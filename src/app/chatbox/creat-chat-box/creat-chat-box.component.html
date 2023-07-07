@@ -1,11 +1,15 @@
 
-<div class="input-group mb-3">
-    <input type="text" class="form-control"  aria-describedby="button-addon2" #name>
-    <button class="btn secondary" type="button" id="button-addon2" (click)="createname(name.value)">Create ChatBox</button>
+<div class="container">
+  <div class="row">
+    
+<div class="input-group bgc-primary border-top border-secondary-subtle p-3 ps-2 pe-2">
+    <input type="text" class="form-control" [(ngModel)]="gname" aria-describedby="button-addon2" #name>
+    <button [disabled]="!gname" class="btn btn-outline-secondary text-white bt-secondary" type="button" id="button-addon2" (click)="createname(name.value)">Create group</button>
   </div>
-  
-<div *ngFor="let obj of allboxs">
-     <p (click)="enter(obj._id, obj.name)">{{obj.name}}</p>
+<div *ngFor="let obj of grouplist" class="p-3 message-content overflow-auto d-flex justify-content-between align-items-center btn-primary" [ngStyle]="{'background-color':color[obj._id]}" (click)="enter(obj._id, obj.name,obj.participants)">
+     <p class="m-0">{{obj.name | titlecase}}</p>
+</div>
+</div>
 </div>
 
   
