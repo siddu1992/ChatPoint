@@ -7,7 +7,7 @@ import { io } from 'socket.io-client';
   providedIn: 'root'
 })
 export class ChatserveService {
-  barseurl:any="http://192.168.1.5:4000"
+  barseurl:any="http://192.168.1.4:4000"
   
   public acctive$: BehaviorSubject<string> = new BehaviorSubject('');
 
@@ -72,6 +72,12 @@ export class ChatserveService {
     }))
    }
    
+   getChatroombyId(roomid:any){
+    return this.http.post<any>(this.barseurl+"/chat/chatroom",{roomid:roomid})
+    .pipe(map((resp:any)=>{
+      return resp
+    }))
+   }
    
 
   public  joinRoom(_id:any){

@@ -38,7 +38,7 @@ export class ChatBoxComponent implements OnInit {
   imageSrc: any = '';
   imageresult: any;
   bytes: any;
-  imagesUlr: any = "http://192.168.1.5:4000/images/"
+  imagesUlr: any = "http://192.168.1.4:4000/images/"
   roomid: any;
   imgbox: any;
   typebox: any = '';
@@ -77,7 +77,7 @@ export class ChatBoxComponent implements OnInit {
   members: any = [];
   participants: any;
   displayStyleAllMembers: any;
-
+  role:any
   constructor(public apiservice: ApiserviceService, public dialog: MatDialog, private compressImage: CompressImageService, public chatservice: ChatserveService, public router: Router, private modalService: NgbModal) {
     let user = JSON.parse(String(localStorage.getItem("userdetails")));
     this.loggedInName = user.Name;
@@ -120,7 +120,10 @@ export class ChatBoxComponent implements OnInit {
       this.roomid = mesval.roomid;
       this.type = mesval.type;
       this.participants = mesval.participants;
+      
       console.log("this.type=", this.type)
+   
+
       this.msg = []
       if (this.type == 1) {
 
@@ -140,6 +143,12 @@ export class ChatBoxComponent implements OnInit {
 
       }
       if (this.type == 2) {
+        let grpadmin =this.participants.filter((obj:any)=>{
+          return obj.userName == this.loggedInName
+  
+        })
+        console.log("groupname", grpadmin)
+        this.role = grpadmin[0].role
         this.allBOxmessages();
         this.join();
         this.allNewMessage();
@@ -302,35 +311,40 @@ export class ChatBoxComponent implements OnInit {
       })
   }
   imgClick(url: any, fileName: any) {
-    console.log("imgevent", fileName)
-    this.displayStyle = "block"
+
 
     this.imgSrc = url + fileName;
 
     const dialogRef = this.dialog.open(ViewimageComponent,
-      {data: { imgSrc: this.imgSrc},width:'20%',height:"auto"}, 
-
+      { data: { imgSrc: this.imgSrc }, width: '20%', height: "auto" }
     );
-  }
-  close() {
-    this.displayStyle = "none";
-    //  this.myDiv.nativeElement.style.overflow = 'auto'
-
-  }
-
-  adduserPop() {
-
-    const dialogRef = this.dialog.open(AddUsersComponent,
-      {data: { roomid: this.roomid ,participants: this.participants},width:'450px',height:"400px"}, 
-
-    );
-
     dialogRef.afterClosed().subscribe((result: any) => {
+      this.getroomdetails(this.roomid)
       console.log(`Dialog result: ${result}`);
     });
   }
 
 
+  adduserPop() {
+
+    const dialogRef = this.dialog.open(AddUsersComponent,
+      { data: { roomid: this.roomid, participants: this.participants }, width: '450px', height: "400px" },
+
+    );
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+
+      this.getroomdetails(this.roomid)
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  getroomdetails(roomId: any) {
+    this.chatservice.getChatroombyId(roomId).subscribe((res: any) => {
+      this.participants = res[0].participants;
+    })
+
+  }
 
   // ngAfterViewChecked() {
   //   var test = this.contentHeight != this.contentRef.nativeElement.scrollHeight
@@ -410,7 +424,7 @@ export class ChatBoxComponent implements OnInit {
 
   allMembersPop() {
     const dialogRef = this.dialog.open(GrpmembersComponent,
-      {data: { participants: this.participants },width:'450px',height:"400px" }, 
+      { data: { participants: this.participants }, width: '450px', height: "400px" },
 
     );
 

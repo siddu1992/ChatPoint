@@ -1,7 +1,8 @@
 import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import { Component, Inject, Optional } from '@angular/core';
+import { Component, Inject, Optional, ViewChild } from '@angular/core';
 import { ApiserviceService } from 'src/app/service/apiservice.service';
 import { ChatserveService } from 'src/app/service/chatserve.service';
+import { CreatChatBoxComponent } from 'src/app/chatbox/creat-chat-box/creat-chat-box.component';
 
 @Component({
   selector: 'app-add-users',
@@ -14,6 +15,7 @@ export class AddUsersComponent {
   dropdownSettings = {}
   userlist: any;
   roomid: any;
+  @ViewChild(CreatChatBoxComponent) chatbox!:CreatChatBoxComponent;
   constructor(public dialogRef: MatDialogRef<AddUsersComponent>,
    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,public apiservice:ApiserviceService,
    public chatservice:ChatserveService) {
@@ -46,8 +48,11 @@ export class AddUsersComponent {
   
 addMeberTogroup(){
   this.chatservice.addMeberTogroup(this.data.roomid,this.selectedItems).subscribe((res:any)=>{
-    this.selectedItems=[]
+    this.selectedItems=[];
+    this.dialogRef.close();
+
 alert("users added success");
+
   },(err:any)=>{
 
   })

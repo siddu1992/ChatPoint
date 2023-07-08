@@ -4,7 +4,7 @@
     <div style="padding: 30px">
     
   <div *ngFor="let obj of participants">
-    <ul><li>{{obj.userName}}</li></ul>
+    <ul><li>{{obj.userName}} <span *ngIf="obj.role=='admin'" style="padding-left: 5px;">({{obj.role}})</span></li></ul>
   </div>
  
     </div>

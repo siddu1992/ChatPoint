@@ -35,7 +35,7 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
 
     this.displayname = name;
    
-      this.chatservice.saveChatroom({name:name,roomId:this.logInuserId,userName:this.loggedInName}).subscribe((res:any)=>{
+      this.chatservice.saveChatroom({name:name,roomId:this.logInuserId,userName:this.loggedInName,role:"admin"}).subscribe((res:any)=>{
        localStorage.setItem("chatboxname",name)
         // this.route.navigateByUrl("/chatbox");
         this.gname="";
@@ -54,8 +54,7 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
 
   allchatbox() {
 
-    this.displayname = name
-   let boxuser={_id:this.logInuserId,userName:this.loggedInName}
+      let boxuser={_id:this.logInuserId,userName:this.loggedInName}
       this.chatservice.getAllchatrooms(boxuser).subscribe((res:any)=>{
         this.allboxs=res;
         this.grouplist = this.allboxs;

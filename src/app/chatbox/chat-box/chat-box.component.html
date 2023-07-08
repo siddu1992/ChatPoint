@@ -55,7 +55,7 @@
                   class="text-white pe-5">
                      Group Members
                   </div>
-                  <div (click)="adduserPop()">
+                  <div *ngIf="role == 'admin'" (click)="adduserPop()">
                   <i class="fa fa-plus" aria-hidden="true" ngbTooltip="Add user"></i>
                   </div>
                 </div>
