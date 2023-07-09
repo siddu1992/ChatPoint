@@ -153,4 +153,20 @@ individualChat(senderId:any,receaverId:any){
       return res;
     }))
   }
+
+
+  
+  unseenMsg(obj:any):Observable<any>{
+    return this.http.post<any>(this.barseurl+"/chat/Chatunseen",obj)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+  updateseen(obj:any):Observable<any>{
+    return this.http.post<any>(this.barseurl+"/chat/updateSeen",obj)
+    .pipe(map((res:any)=>{
+      return res;
+    }))
+  }
+
 }

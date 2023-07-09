@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { async, filter, take } from 'rxjs';
 import { ChatserveService } from 'src/app/service/chatserve.service';
@@ -31,6 +31,7 @@ import { ViewimageComponent } from 'src/app/models/viewimage/viewimage.component
 export class ChatBoxComponent implements OnInit {
   @ViewChild('target') contentRef!: ElementRef<HTMLInputElement>;
   @ViewChild('template') templateRef!: TemplateRef<any>;
+  @ViewChild(CreatChatBoxComponent) create!:CreatChatBoxComponent
 
   contentHeight: any;
 
@@ -222,6 +223,7 @@ export class ChatBoxComponent implements OnInit {
   allNewMessage() {
 
     this.chatservice.allNewMessage().subscribe((res: any) => {
+      this.create.updateseen(this.roomid);
       if (!this.msg.includes(res)) {
 
         this.msg.push(res)
@@ -235,9 +237,6 @@ export class ChatBoxComponent implements OnInit {
     });
 
   }
-
-
-
 
 
   join() {
@@ -316,7 +315,7 @@ export class ChatBoxComponent implements OnInit {
     this.imgSrc = url + fileName;
 
     const dialogRef = this.dialog.open(ViewimageComponent,
-      { data: { imgSrc: this.imgSrc }, width: '20%', height: "auto" }
+      { data: { imgSrc: this.imgSrc }, width: '500px', height: "60vw" }
     );
     dialogRef.afterClosed().subscribe((result: any) => {
       this.getroomdetails(this.roomid)
@@ -433,6 +432,9 @@ export class ChatBoxComponent implements OnInit {
     });
 
 
+  }
+  addName(event:any){
+      
   }
   // AllMembersPopclose() {
   //   this.displayStyleAllMembers = "none";

@@ -22,10 +22,10 @@
           </ul>
           <div class="tab-content" id="ex1-content">
             <div class="tab-pane fade show active" id="ex1-tabs-1" role="tabpanel" aria-labelledby="ex1-tab-1">
-              <app-chat-users></app-chat-users>
+              <app-chat-users ></app-chat-users>
             </div>
             <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
-              <app-creat-chat-box></app-creat-chat-box>
+              <app-creat-chat-box (childEvent)="addName($event)"></app-creat-chat-box>
             </div>
 
           </div>
@@ -61,11 +61,18 @@
                 </div>
                 </div>
               
-                <div class="messbox overflow-auto p-2" *ngIf="msg!=''">
+                <div class="messbox overflow-auto p-2" *ngIf="msg.length!=0">
                   <div *ngFor="let obj of msg">
                     <p class="m-0"><small>{{obj.userName | titlecase }}</small></p>
-                    <div class="p-2 bgc-light d-inline-block mb-2 rounded-2">
-                      <p class="m-0">{{obj.message}}</p>
+                    <div *ngIf="obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
+                      <p class="m-0">{{obj.message}}  <span *ngIf="obj.receaverId.recId==roomid">
+                        <i *ngIf="obj.receaverId.seen==false" style="color: grey;" class="fa fa-check" aria-hidden="true"></i>
+                        <i *ngIf="obj.receaverId.seen==true" style="color: rgb(62, 147, 231);" class="fa fa-check" aria-hidden="true"></i>
+
+                      </span></p>
+                    </div>
+                    <div *ngIf="!obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
+                      <p class="m-0">{{obj.message}}  </p>
                     </div>
                     <div *ngIf="obj.fileName !='' && obj.fileName !=undefined">
                       <img src="{{imagesUlr}}{{obj.fileName}}" style="max-width:100%;cursor:pointer"

@@ -6,9 +6,9 @@
     <input type="text" class="form-control" [(ngModel)]="gname" aria-describedby="button-addon2" #name>
     <button [disabled]="!gname" class="btn btn-outline-secondary text-white bt-secondary" type="button" id="button-addon2" (click)="createname(name.value)">Create group</button>
   </div>
-<div *ngFor="let obj of grouplist" class="p-3 message-content overflow-auto d-flex justify-content-between align-items-center btn-primary" [ngStyle]="{'background-color':color[obj._id]}"
+<div *ngFor="let obj of grouplist"  class="p-3 message-content overflow-auto d-flex justify-content-between align-items-center btn-primary" [ngStyle]="{'background-color':color[obj._id]}"
  (click)="enter(obj._id, obj.name,obj.participants)">
-     <p class="m-0">{{obj.name | titlecase}}</p>
+     <p class="m-0">{{obj.name | titlecase}}  <span *ngIf="obj.count" style="margin-left: 3px;">({{obj.count}})</span></p>
 </div>
 </div>
 </div>

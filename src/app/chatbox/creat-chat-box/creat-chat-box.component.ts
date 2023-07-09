@@ -1,5 +1,5 @@
 import { Dialog } from '@angular/cdk/dialog';
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AddUsersComponent } from 'src/app/models/add-users/add-users.component';
@@ -21,6 +21,7 @@ export class CreatChatBoxComponent implements OnInit{
   loggedInName: any;
   logInuserId: any;
   gname:any;
+
 constructor(public chatservice:ChatserveService,public route:Router, public apiservice:ApiserviceService, private renderer: Renderer2){
   let user = JSON.parse(String(localStorage.getItem("userdetails")));
   this.loggedInName = user.Name;
@@ -58,6 +59,7 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
       this.chatservice.getAllchatrooms(boxuser).subscribe((res:any)=>{
         this.allboxs=res;
         this.grouplist = this.allboxs;
+        this.unseen();
       },
       (error:any)=>{
          alert("server error")  
@@ -69,7 +71,7 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
     this.color=[];
     this.color[roomid]='#2d2d30'
     this.chatservice.joinRoom(roomid);
-
+this.updateseen(roomid)
     this.chatservice.sendMesstoUser({roomid:roomid,roomname:name,type:2,participants:participants});
 
 
@@ -94,6 +96,23 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
       this.ngOnInit();
     })
   }
-  
+
+  unseen(){
+    this.chatservice.unseenMsg({_id:this.logInuserId}).subscribe((res:any)=>{
+      let unseen=res;
+      for(let obj of this.grouplist){
+           for(let un of unseen){
+            if(obj.name == un.chatroomName)
+               obj.count=un.unseenCount;
+           }
+      }
+    })
+  }
+  updateseen(roomid:any){
+    this.chatservice.updateseen({_id:this.logInuserId,roomId:roomid}).subscribe((res:any)=>{
+      let unseen=res;
+      this.allchatbox();
+    })
+  }
   }
   
