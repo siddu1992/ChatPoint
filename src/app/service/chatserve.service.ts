@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { io } from 'socket.io-client';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatserveService {
-  barseurl:any="http://192.168.1.4:4000"
+  barseurl:any=environment.config.apiUrl;
   
   public acctive$: BehaviorSubject<string> = new BehaviorSubject('');
 
@@ -36,8 +37,16 @@ export class ChatserveService {
     }
   });
 
-
-
+  refresh(): Observable<any> {
+    return new Observable<any>((observer) => {
+      this.socket.on('refresh', (res) => {
+        observer.next(res);
+      });
+    });
+  }
+  refreshemit(roomId:any) {
+    this.socket.emit('refresh', roomId);
+  }
   authenticate(userId: string): void {
     this.socket.emit('authenticate', userId);
   }
@@ -45,6 +54,15 @@ export class ChatserveService {
   sendindividualMsg(logInuserId:any,recipientId: string, message: string,img:any,imgname:any): void {
     this.socket.emit('individualMsg', {sender:logInuserId,recipientId: recipientId,message: message,img:img,imgname:imgname });
   }
+
+  // refresh(): Observable<string> {
+  //   return new Observable<string>((observer) => {
+  //     this.socket.on('refresh', (messageId: string) => {
+  //       observer.next(messageId);
+  //     });
+  //   });
+  // }
+
 
   receiveindividualMsg(): Observable<any> {
     return new Observable<any>(observer => {
@@ -144,6 +162,15 @@ individualChat(senderId:any,receaverId:any){
   .pipe(map((resp:any)=>{
     return resp
   }))}
+
+  indiUpdateSeen(obj:any){
+    return this.http.post<any>(this.barseurl+"/chat/indiUpdateSeen",obj)
+    .pipe(map((resp:any)=>{
+      return resp
+    }))}
+  
+  
+
 
 
 

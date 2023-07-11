@@ -35,6 +35,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GrpmembersComponent } from './models/grpmembers/grpmembers.component';
 import { ViewimageComponent } from './models/viewimage/viewimage.component';
+import { ScrollBottomDirective } from './scroll-bottom.directive';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ViewimageComponent } from './models/viewimage/viewimage.component';
     AddUsersComponent,
     GrpmembersComponent,
     ViewimageComponent,
+    ScrollBottomDirective,
 
   ],
   imports: [
@@ -75,6 +77,9 @@ import { ViewimageComponent } from './models/viewimage/viewimage.component';
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},ApiserviceService,    CompressImageService,
     CartserviceService,ChatserveService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }, AuthgaurdGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    ScrollBottomDirective
+  ]
 })
 export class AppModule { }

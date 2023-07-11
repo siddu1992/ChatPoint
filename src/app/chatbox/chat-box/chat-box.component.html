@@ -61,14 +61,13 @@
                 </div>
                 </div>
               
-                <div class="messbox overflow-auto p-2" *ngIf="msg.length!=0">
+                <div class="messbox overflow-auto p-2" *ngIf="msg.length!=0" appScrollBottom>
                   <div *ngFor="let obj of msg">
                     <p class="m-0"><small>{{obj.userName | titlecase }}</small></p>
                     <div *ngIf="obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
-                      <p class="m-0">{{obj.message}}  <span *ngIf="obj.receaverId.recId==roomid">
+                      <p class="m-0">{{obj.message}}<span *ngIf="obj.receaverId.recId==roomid">
                         <i *ngIf="obj.receaverId.seen==false" style="color: grey;" class="fa fa-check" aria-hidden="true"></i>
                         <i *ngIf="obj.receaverId.seen==true" style="color: rgb(62, 147, 231);" class="fa fa-check" aria-hidden="true"></i>
-
                       </span></p>
                     </div>
                     <div *ngIf="!obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
@@ -79,7 +78,7 @@
                         (click)="imgClick(imagesUlr,obj.fileName)" class="modal-hover-opacity d-inline-block"
                         data-toggle="modal" data-target="#myModal">
 
-                    </div>
+                    </div>.
 
 
                     <!-- <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">

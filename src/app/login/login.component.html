@@ -13,20 +13,40 @@
         id="useremail"
         formControlName="useremail"
       />
+      <div *ngIf="userForm.get('useremail')?.invalid && userForm.get('useremail')?.touched">
+        Please enter a valid email address.
+      </div>
     </div>
     
     <div class="form-group pb-3">
         <label for="userpassword" class="form-label">User Password</label>
+        <div class="password-input-container">
         <input
-          type="password"
+          type="{{ showPassword ? 'text' : 'password' }}"
           class="form-control"
           id="userpassword"
           formControlName="userpassword"
         />
+        <span class="password-toggle" (click)="togglePasswordVisibility()">
+          <i class="fa" [ngClass]="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+        </span>
+        </div>
+        <div *ngIf="userForm.get('userpassword')?.invalid && userForm.get('userpassword')?.touched">
+          <div *ngIf="userForm.get('userpassword')?.hasError('required')">
+            Password is required.
+          </div>
+          <div *ngIf="userForm.get('userpassword')?.hasError('minlength')">
+            Password should be at least 8 characters long.
+          </div>
+          <div *ngIf="userForm.get('userpassword')?.hasError('pattern')">
+            Password should contain at least one lowercase letter, one uppercase letter, and one digit.
+          </div>
+        </div>
       </div>
       <div class="form-group pb-3">
         <div class="checkbox" style="animationshow 0.5s ease-in;">
           <label><input type="checkbox" style="animation:show 1s cubic-bezier(0.18, 0.89, 0.32, 1.28);"> Remember me</label>
+    
          </div>
       </div>
       <div class="form-group">

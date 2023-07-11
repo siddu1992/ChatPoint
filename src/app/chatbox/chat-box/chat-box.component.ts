@@ -20,6 +20,7 @@ import { ApiserviceService } from 'src/app/service/apiservice.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GrpmembersComponent } from 'src/app/models/grpmembers/grpmembers.component';
 import { ViewimageComponent } from 'src/app/models/viewimage/viewimage.component';
+import { environment } from 'src/app/environments/environment';
 
 @Component({
   selector: 'app-chat-box',
@@ -39,7 +40,8 @@ export class ChatBoxComponent implements OnInit {
   imageSrc: any = '';
   imageresult: any;
   bytes: any;
-  imagesUlr: any = "http://192.168.1.4:4000/images/"
+  imagesUlr:any=environment.config.apiUrl+"/images/";
+
   roomid: any;
   imgbox: any;
   typebox: any = '';
@@ -85,8 +87,15 @@ export class ChatBoxComponent implements OnInit {
     this.logInuserId = user.id;
     console.log("users", user.id)
 
+   
+    this.chatservice.refresh().subscribe((res) => {
+      // Handle the event (e.g., display a notification)
+if(res ==this.roomid){
+  this.indiUpdateSeen();
+  console.log('Anewuser',res);
 
-
+}
+    });
 
   }
 
@@ -112,7 +121,7 @@ export class ChatBoxComponent implements OnInit {
     // this.textBoxHeight = textArea.scrollHeight;
   }
   ngOnInit() {
-
+ 
     //// this.scrollToElement();        
 
 
@@ -121,26 +130,32 @@ export class ChatBoxComponent implements OnInit {
       this.roomid = mesval.roomid;
       this.type = mesval.type;
       this.participants = mesval.participants;
-      
+
       console.log("this.type=", this.type)
-   
+
+      this.chatservice.refreshemit(this.logInuserId);
 
       this.msg = []
       if (this.type == 1) {
+        this.msg = [];
 
         //this.ActiveUser()
         this.chatservice.receiveindividualMsg().subscribe((res: any) => {
+          if(res!=''){
           if (res.userId == this.roomid || res.userId == this.loggedInName) {
             // Handle received messages
             if (!this.msg.includes(res)) {
 
               this.msg.push(res)
+              this.indiUpdateSeen();
+
 
             }
             console.log('Received Message ho ho:', res);
           }
+         }
         });
-        this.individualChat()
+        this.indiUpdateSeen();
 
       }
       if (this.type == 2) {
@@ -391,7 +406,6 @@ export class ChatBoxComponent implements OnInit {
   // }
 
   individualChat() {
-    this.msg = [];
     this.chatservice.individualChat(this.logInuserId, this.roomid).subscribe((allindi: any) => {
       for (let obj of allindi) {
         if (!this.msg.includes(obj)) {
@@ -401,6 +415,13 @@ export class ChatBoxComponent implements OnInit {
       }
     })
   }
+  indiUpdateSeen(){
+
+    this.chatservice.indiUpdateSeen({receiverId:this.logInuserId, senderId:this.roomid}).subscribe((res:any)=>{
+      this.individualChat()
+    })
+  }
+
   usernames(searchTerm: any) {
     console.log("filternames", searchTerm)
     this.nameList.usernames(searchTerm);
@@ -436,10 +457,5 @@ export class ChatBoxComponent implements OnInit {
   addName(event:any){
       
   }
-  // AllMembersPopclose() {
-  //   this.displayStyleAllMembers = "none";
-  //   //  this.myDiv.nativeElement.style.overflow = 'auto'
-
-  // }
 
 }

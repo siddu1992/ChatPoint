@@ -33,6 +33,8 @@
     width: 75%;
 
   }
+  .messbox {  height: 500px; /* Adjust the height according to your needs */
+    overflow-y: auto;}
   .message-input text-area {height: 50px;}
   .messbox img {width: 30%;}
   .custom-class {

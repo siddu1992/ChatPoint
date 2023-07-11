@@ -70,8 +70,9 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
   enter(roomid:any,name:any,participants:any){
     this.color=[];
     this.color[roomid]='#2d2d30'
-    this.chatservice.joinRoom(roomid);
 this.updateseen(roomid)
+this.chatservice.joinRoom(roomid);
+
     this.chatservice.sendMesstoUser({roomid:roomid,roomname:name,type:2,participants:participants});
 
 

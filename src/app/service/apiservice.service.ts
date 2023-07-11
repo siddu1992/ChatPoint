@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs';
+import { environment } from '../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiserviceService {
-baseUrl:any="http://192.168.1.4:4000/"
+baseUrl:any=environment.config.apiUrl
   constructor(private http:HttpClient) {
 
    }
 
    getproduct (){
     
-    return this.http.get<any>(this.baseUrl+"products/allproducts")
+    return this.http.get<any>(this.baseUrl+"/products/allproducts")
     .pipe(map((res:any)=>{
       return res
     }))
@@ -23,7 +24,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    saveproduct (product:any){
     
-    return this.http.post<any>(this.baseUrl+"products/create",product)
+    return this.http.post<any>(this.baseUrl+"/products/create",product)
     .pipe(map((res:any)=>{
       return res;
     }))
@@ -31,7 +32,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    getuser (){
     
-    return this.http.get<any>(this.baseUrl+"users/allusers")
+    return this.http.get<any>(this.baseUrl+"/users/allusers")
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -39,7 +40,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    saveuser (user:any){
     
-    return this.http.post<any>(this.baseUrl+"users/add", user)
+    return this.http.post<any>(this.baseUrl+"/users/add", user)
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -47,7 +48,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    delproduct (id:any){
     
-    return this.http.delete<any>(this.baseUrl+`products/delete?id=${id}`)
+    return this.http.delete<any>(this.baseUrl+`/products/delete?id=${id}`)
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -56,7 +57,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    updateproduct (body:any){
     
-    return this.http.put<any>(this.baseUrl+`products/update?id=${body._id}`,body )
+    return this.http.put<any>(this.baseUrl+`/products/update?id=${body._id}`,body )
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -64,7 +65,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    deluser (id:any){
     
-    return this.http.delete<any>(this.baseUrl+`users/delete?id=${id}`)
+    return this.http.delete<any>(this.baseUrl+`/users/delete?id=${id}`)
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -72,7 +73,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    updateuser (body:any){
     
-    return this.http.put<any>(this.baseUrl+`users/update?id=${body._id}`,body )
+    return this.http.put<any>(this.baseUrl+`/users/update?id=${body._id}`,body )
     .pipe(map((resp:any)=>{
       return resp
     }))
@@ -80,7 +81,7 @@ baseUrl:any="http://192.168.1.4:4000/"
 
    userlogin(body:any){
     
-    return this.http.post<any>(this.baseUrl+`users/login`,body )
+    return this.http.post<any>(this.baseUrl+`/users/login`,body )
     .pipe(map((resp:any)=>{
       return resp
     }))

@@ -13,8 +13,10 @@ export class LoginComponent implements OnInit{
   userdetails: any;
 
   userForm = new FormGroup({
-    useremail: new FormControl('',[Validators.required]),
-    userpassword:new FormControl('',[Validators.required]),
+    useremail: new FormControl('',[Validators.required,Validators.email]),
+    userpassword:new FormControl('',[Validators.required,  Validators.minLength(1)
+   // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
+   ])
   });
   token: any;
 
@@ -23,6 +25,10 @@ export class LoginComponent implements OnInit{
   ngOnInit() {
    
   }
+  showPassword = false;
+togglePasswordVisibility() {
+  this.showPassword = !this.showPassword;
+}
   userlogin(){
     this.apiservice.userlogin(this.userForm.value).subscribe((res:any)=>{
       this.userdetails = res.user;
