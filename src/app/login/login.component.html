@@ -14,7 +14,7 @@
         formControlName="useremail"
       />
       <div *ngIf="userForm.get('useremail')?.invalid && userForm.get('useremail')?.touched">
-        Please enter a valid email address.
+        <p>Please enter a valid email address.</p>
       </div>
     </div>
     
@@ -33,13 +33,13 @@
         </div>
         <div *ngIf="userForm.get('userpassword')?.invalid && userForm.get('userpassword')?.touched">
           <div *ngIf="userForm.get('userpassword')?.hasError('required')">
-            Password is required.
+           <p> Password is required.</p>
           </div>
           <div *ngIf="userForm.get('userpassword')?.hasError('minlength')">
-            Password should be at least 8 characters long.
+           <p> Password should be at least 8 characters long.</p>
           </div>
           <div *ngIf="userForm.get('userpassword')?.hasError('pattern')">
-            Password should contain at least one lowercase letter, one uppercase letter, and one digit.
+           <p> Password should contain at least one lowercase letter, one uppercase letter, and one digit.</p>
           </div>
         </div>
       </div>
@@ -52,6 +52,9 @@
       <div class="form-group">
       <button type="submit" [disabled]="!userForm.valid" class="p-2">Submit</button>
     </div>
+    <div style="text-align: center;color: red;">
+    <h3 style="text-decoration: underline;" routerLink="/usersform">Register</h3>
+     </div>
     </form>
     </div>
     </div>

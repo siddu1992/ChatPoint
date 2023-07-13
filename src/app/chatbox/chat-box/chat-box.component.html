@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
 
-      <div class="col-3 sidebar p-0 border-end">
+      <div class="col-lg-4 col-5 col-sm-5 sidebar p-0 border-end">
         <!-- <app-header *ngIf="router.url !== '/login'"></app-header> -->
         <app-header *ngIf="router.url !== '/login' " (searchChanged)="usernames($event)"></app-header>
 
@@ -33,14 +33,14 @@
 
         </div>
       </div>
-      <div class="col-9 main-content bgc-dark" *ngIf="roomname =='' || roomname==undefined">
+      <div class="col-lg-8 col-7 col-sm-7 main-content bgc-dark" *ngIf="roomname =='' || roomname==undefined">
         <div class="ful-content overflow-auto">
           <div class="text-white pt-5 ps-5 welname">
             <h5>welcome! <br><strong>{{loggedInName}}</strong></h5>
           </div>
         </div>
       </div>
-      <div class="col-9 main-content" *ngIf="roomname!='' && roomname!= undefined">
+      <div class="col-lg-8 col-7 col-sm-7 main-content" *ngIf="roomname!='' && roomname!= undefined">
 
         <div class="container-fluid h-100 p-0">
           <div class="row h-100">
@@ -64,12 +64,7 @@
                 <div class="messbox overflow-auto p-2" *ngIf="msg.length!=0" appScrollBottom>
                   <div *ngFor="let obj of msg">
                     <p class="m-0"><small>{{obj.userName | titlecase }}</small></p>
-                    <div *ngIf="obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
-                      <p class="m-0">{{obj.message}}<span *ngIf="obj.receaverId.recId==roomid">
-                        <i *ngIf="obj.receaverId.seen==false" style="color: grey;" class="fa fa-check" aria-hidden="true"></i>
-                        <i *ngIf="obj.receaverId.seen==true" style="color: rgb(62, 147, 231);" class="fa fa-check" aria-hidden="true"></i>
-                      </span></p>
-                    </div>
+                   
                     <div *ngIf="!obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
                       <p class="m-0">{{obj.message}}  </p>
                     </div>
@@ -78,7 +73,16 @@
                         (click)="imgClick(imagesUlr,obj.fileName)" class="modal-hover-opacity d-inline-block"
                         data-toggle="modal" data-target="#myModal">
 
-                    </div>.
+                    </div>
+                    <div *ngIf="obj.receaverId" class="p-2 bgc-light d-inline-block mb-2 rounded-2">
+                      <p class="m-0">{{obj.message}}<span *ngIf="obj.receaverId.recId==roomid">
+                        <i *ngIf="obj.receaverId.seen==false" style="color: grey;" class="fa fa-check" aria-hidden="true"></i>
+                        <i *ngIf="obj.receaverId.seen==true" style="color: rgb(62, 147, 231);" class="fa fa-check" aria-hidden="true"></i>
+                      </span></p>
+                    </div>
+                    <div>
+                      <small>{{obj.createdAt | date:'short'}}</small>
+                    </div>
 
 
                     <!-- <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
@@ -124,7 +128,7 @@
             <div class="col mesbox">
               <div class="input-container bgc-dark">
                 <div class="showimg" *ngIf="imageSrc!='' && imageSrc!=undefined">
-                  <i class="fa fa-times" aria-hidden="true" (click)="closeimg()"></i>
+                  <i style="color: red;" class="fa fa-times" aria-hidden="true" (click)="closeimg()"></i>
                   <img [src]="imageSrc" style="max-width:100%;cursor:pointer;width: 10%;" class="modal-hover-opacity" />
 
                 </div>
@@ -140,7 +144,8 @@
                   <textarea type="text" [style.height.px]="textBoxHeight" (focus)="onFocus()"
                     class="form-control rounded-2 ms-2 bgc-primary" aria-describedby="button-addon2" #mess
                     placeholder="Type Message" [(ngModel)]="typebox" (input)="adjustTextBoxHeight($event)"></textarea>
-                  <button [disabled]="bytes==[] ||( typebox =='' || typebox ==undefined)"
+                 
+                    <button [disabled]="imageSrc =='' && typebox ==''"
                     class="btn btn-outline-secondary border-0 fs-3" type="button" id="button-addon2"
                     (click)="sendMessage(mess.value)"><i class="fa fa-play" aria-hidden="true"></i>
                   </button>

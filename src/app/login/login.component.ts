@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiserviceService } from '../service/apiservice.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';  
 
 @Component({
   selector: 'app-login',
@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit{
 
   userForm = new FormGroup({
     useremail: new FormControl('',[Validators.required,Validators.email]),
-    userpassword:new FormControl('',[Validators.required,  Validators.minLength(1)
-   // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
+    userpassword:new FormControl('',[Validators.required,  Validators.minLength(1),
+    // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')
    ])
   });
   token: any;
@@ -43,10 +43,13 @@ togglePasswordVisibility() {
 
     },
     (error:any)=>{
-      alert("invalid Email or password");
+
+      Swal.fire("invalid Email or password");
       localStorage.setItem("loggedin","false");
 
     }
     );
   }
 }
+
+

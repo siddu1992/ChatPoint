@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiserviceService } from 'src/app/service/apiservice.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-users-form',
@@ -18,37 +20,42 @@ export class UsersFormComponent implements OnInit{
 
   userForm = new FormGroup({
     userName: new FormControl('',[Validators.required]),
-    userId: new FormControl('',[Validators.required]),
-    useremail: new FormControl('',[Validators.required]),
-    userrole: new FormControl('',[Validators.required]),
-    createdby: new FormControl(''),
-    userpassword:new FormControl('',[Validators.required]),
-    userlocation: new FormControl('',[Validators.required])
+ //   userId: new FormControl('',[Validators.required]),
+    useremail: new FormControl('',[Validators.required,Validators.email]),
+    userrole: new FormControl(''),
+  //  createdby: new FormControl(''),
+    userpassword:new FormControl('',[Validators.required,Validators.minLength(5),Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$')],
+    ),
+  //  userlocation: new FormControl('',[Validators.required])
   });
 
-  constructor(public apiservice: ApiserviceService){
+  constructor(public apiservice: ApiserviceService, public route: Router){
     
   }
 
   ngOnInit() {
-    this.token =localStorage.getItem("mytoken");
-    this.userdetails=localStorage.getItem("userdetails");
-    this.id = JSON.parse(this.userdetails).id;
+    // this.token =localStorage.getItem("mytoken");
+    // this.userdetails=localStorage.getItem("userdetails");
+    // this.id = JSON.parse(this.userdetails).id;
    // this.userForm.value.createdby= this.id;
 
-    console.log(this.userForm.value.createdby);
+  //  console.log(this.userForm.value.createdby);
 
     this.userroles =[{name:"User",value:"user"},{name:"Admin",value:"admin"},{name:"Staff", value:"staff"}]
   }
   save() {
-    this.userForm.value.createdby=this.id;
+    this.userForm.value.userrole="user";
+  //  this.userForm.value.createdby=this.id;
+
     this.apiservice.saveuser(this.userForm.value).subscribe(response =>{
       console.log("response",response);
-      alert("user saved successfully");
+      Swal.fire("user saved successfully");
       this.userForm.reset();
+      this.route.navigateByUrl("/login")
+
       
     }, (error)=>{
-      alert("email already exist")
+      Swal.fire("email already exist")
     }
     )
     

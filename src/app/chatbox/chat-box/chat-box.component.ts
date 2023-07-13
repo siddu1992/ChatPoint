@@ -37,9 +37,9 @@ export class ChatBoxComponent implements OnInit {
   contentHeight: any;
 
   msg: any = [];
-  imageSrc: any = '';
+  imageSrc: any = "";
   imageresult: any;
-  bytes: any;
+  bytes: any=[];
   imagesUlr:any=environment.config.apiUrl+"/images/";
 
   roomid: any;
@@ -87,16 +87,22 @@ export class ChatBoxComponent implements OnInit {
     this.logInuserId = user.id;
     console.log("users", user.id)
 
-   
+    let seen=true;
     this.chatservice.refresh().subscribe((res) => {
       // Handle the event (e.g., display a notification)
-if(res ==this.roomid){
-  this.indiUpdateSeen();
-  console.log('Anewuser',res);
+          if(res ==this.roomid){
+            if(seen){
+              this.indiUpdateSeen();
 
-}
+            }
+            seen=false;
+            console.log('Anewuser',res);
+
+          }
     });
-
+setTimeout(()=>{
+  seen=true;
+},2000)
   }
 
 
@@ -124,21 +130,24 @@ if(res ==this.roomid){
  
     //// this.scrollToElement();        
 
+    let i=0;
+    let temproomId='';
 
     this.chatservice.chattoUserList.subscribe((mesval: any) => {
       this.roomname = mesval.roomname;
       this.roomid = mesval.roomid;
       this.type = mesval.type;
       this.participants = mesval.participants;
-
       console.log("this.type=", this.type)
 
       this.chatservice.refreshemit(this.logInuserId);
-
-      this.msg = []
       if (this.type == 1) {
-        this.msg = [];
+        if(this.roomid != temproomId){
+          this.msg = []
 
+        this.indiUpdateSeen();
+        temproomId=this.roomid;
+        }
         //this.ActiveUser()
         this.chatservice.receiveindividualMsg().subscribe((res: any) => {
           if(res!=''){
@@ -155,7 +164,6 @@ if(res ==this.roomid){
           }
          }
         });
-        this.indiUpdateSeen();
 
       }
       if (this.type == 2) {
@@ -164,10 +172,16 @@ if(res ==this.roomid){
   
         })
         console.log("groupname", grpadmin)
-        this.role = grpadmin[0].role
-        this.allBOxmessages();
-        this.join();
-        this.allNewMessage();
+        this.role = grpadmin[0].role;
+        if(this.roomid != temproomId){
+          this.msg = []
+          this.allBOxmessages();
+          this.join();
+          this.allNewMessage();
+          temproomId=this.roomid;
+
+        }
+       
       }
 
 
@@ -214,6 +228,7 @@ if(res ==this.roomid){
         this.bytes["name"] = ""
       this.typebox = ""
       this.imgbox = ""
+      this.imageSrc=''
     }
     else {
       // Group message
@@ -246,7 +261,6 @@ if(res ==this.roomid){
 
 
       }
-      console.log("res----", res)
     }, (err: any) => {
       console.log(err)
     });
@@ -355,7 +369,10 @@ if(res ==this.roomid){
 
   getroomdetails(roomId: any) {
     this.chatservice.getChatroombyId(roomId).subscribe((res: any) => {
-      this.participants = res[0].participants;
+      if(res.length!=0){
+        this.participants = res[0].participants;
+
+      }
     })
 
   }
@@ -411,7 +428,6 @@ if(res ==this.roomid){
         if (!this.msg.includes(obj)) {
           this.msg.push(obj);
         }
-        console.log("allindi----", allindi)
       }
     })
   }

@@ -59,7 +59,7 @@ export class ChatUsersComponent implements OnInit{
 active(){
   this.chatservice.ActiveUsersList().subscribe((activeusers: any) => {
     console.log("activeusers  ",activeusers);
-
+if(this.filteruser){
     this.activeUsers=activeusers;
     for(let obj of this.filteruser){
       for(let act of this.activeUsers){
@@ -70,7 +70,9 @@ active(){
      }
     console.log("filteruser",this.filteruser);
     }
+  }
   });
+  
 }
 
 
@@ -95,5 +97,6 @@ active(){
     });
 
   };
+  
 
 }

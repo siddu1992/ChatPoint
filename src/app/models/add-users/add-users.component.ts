@@ -3,6 +3,7 @@ import { Component, Inject, Optional, ViewChild } from '@angular/core';
 import { ApiserviceService } from 'src/app/service/apiservice.service';
 import { ChatserveService } from 'src/app/service/chatserve.service';
 import { CreatChatBoxComponent } from 'src/app/chatbox/creat-chat-box/creat-chat-box.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-users',
@@ -51,7 +52,7 @@ addMeberTogroup(){
     this.selectedItems=[];
     this.dialogRef.close();
 
-alert("users added success");
+    Swal.fire("users added success");
 
   },(err:any)=>{
 

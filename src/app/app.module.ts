@@ -36,6 +36,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GrpmembersComponent } from './models/grpmembers/grpmembers.component';
 import { ViewimageComponent } from './models/viewimage/viewimage.component';
 import { ScrollBottomDirective } from './scroll-bottom.directive';
+import { HashLocationStrategy,Location, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,7 @@ import { ScrollBottomDirective } from './scroll-bottom.directive';
 
 
   ],
-  providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},ApiserviceService,    CompressImageService,
+  providers: [Location,{provide: LocationStrategy, useClass: HashLocationStrategy},{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}},ApiserviceService,    CompressImageService,
     CartserviceService,ChatserveService,{ provide: HTTP_INTERCEPTORS, useClass: InterceptorsService, multi: true }, AuthgaurdGuard],
   bootstrap: [AppComponent],
   exports: [

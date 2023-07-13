@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { AddUsersComponent } from 'src/app/models/add-users/add-users.component';
 import { ApiserviceService } from 'src/app/service/apiservice.service';
 import { ChatserveService } from 'src/app/service/chatserve.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-creat-chat-box',
@@ -41,13 +42,13 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
         // this.route.navigateByUrl("/chatbox");
         this.gname="";
         this.allchatbox();
-        alert("group created");
+        Swal.fire("group created");
         
 
 
       },
       (error:any)=>{
-          alert("chat room aleardy exists")  
+        Swal.fire("chat room aleardy exists")  
       });
 
     
@@ -62,7 +63,7 @@ constructor(public chatservice:ChatserveService,public route:Router, public apis
         this.unseen();
       },
       (error:any)=>{
-         alert("server error")  
+        Swal.fire("server error")  
       }
       );
     
@@ -92,7 +93,7 @@ this.chatservice.joinRoom(roomid);
     this.apiservice.getuser().subscribe((resp:any)=>{
       this.filteruser = resp.user;
       console.log("resp",resp);
-      alert("user added successfully");
+      Swal.fire("user added successfully");
       
       this.ngOnInit();
     })

@@ -1,7 +1,15 @@
-.logo-img img {width: 40px;}
+//.logo-img img {width: 40px;}
 .btn-no-outline {border:0;}
 .btn-no-outline:focus {
     outline: none !important;
     box-shadow: none !important;
   }
   .header-top {margin-bottom: 15%;}
+
+  @media(max-width:420px){
+
+    .navbar-menu input {
+      width: 110px;
+  }
+ 
+  }

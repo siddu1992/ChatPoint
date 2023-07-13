@@ -23,13 +23,13 @@
   }
   
 .main-content {
-    margin-left: 25%;
+    margin-left: 33.3%;
   }
 
   .message-input {
     position: fixed;
     bottom: 0;
-    left: 25%;
+    left: 33.3%;
     width: 75%;
 
   }
@@ -86,4 +86,11 @@
 
 ul#ex1 {
     margin-bottom: 0 !important;
+}
+
+@media (max-width:420px) {
+  .main-content, .message-input {
+    margin-left: 41.6%;
+  }
+  .welname h5 {font-size: 34px;}
 }

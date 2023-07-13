@@ -1,71 +1,58 @@
-<div class="container">
-    <legend>Job Portal</legend>
-    <div class="row">
-      <div class="col col-md-8" style="overflow-y: scroll; max-height: 100vh">
-        <form [formGroup]="userForm" (ngSubmit)="save()">
-          <div class="mb-3">
-            <label for="userName" class="form-label">user Name</label>
-            <input
-              type="text"
-              class="form-control"
-              id="userName"
-              formControlName="userName"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="userpassword" class="form-label">user Password</label>
-            <input
-              type="password"
-              class="form-control"
-              id="userpassword"
-              formControlName="userpassword"
-            />
-           
-          </div>
-          <div class="mb-3">
-            <label for="userId" class="form-label">user Id</label>
-            <input
-              type="number"
-              class="form-control"
-              id="userId"
-              formControlName="userId"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="useremail" class="form-label">user Email</label>
-            <input
-              type="text"
-              class="form-control"
-              id="useremail"
-              formControlName="useremail"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="userrole" class="form-label">user Role</label>
-            <select type="text"
+<div class="container" style="margin-top: 15px;">
+  <legend>Registration</legend>
+  <div class="row">
+    <div class="col col-md-8">
+      <form [formGroup]="userForm" (ngSubmit)="save()" class="form">
+        <div class="mb-3">
+          <label for="userName" class="form-label">User Name</label>
+          <input
+            type="text"
             class="form-control"
-            id="userrole"
-            formControlName="userrole">
+            id="userName"
+            formControlName="userName"
+          />
+          <div *ngIf="userForm.get('userName')?.touched">
+           <p> Please enter a userName.</p>
+          </div>
+        </div>
 
-            <option *ngFor="let roles of userroles" value="{{roles.value}}">{{roles.name}}</option>
-          </select>
-          </div>
-         
+        <div class="mb-3">
+          <label for="useremail" class="form-label">Email</label>
+          <input
+            type="text"
+            class="form-control"
+            id="useremail"
+            formControlName="useremail"
+          />
           
-          <div class="mb-3">
-            <label for="userlocation" class="form-label">user location</label>
-            <input
-              type="text"
-              class="form-control"
-              id="userlocation"
-              formControlName="userlocation"
-            />
+          <div *ngIf="userForm.get('useremail')?.invalid && userForm.get('useremail')?.touched">
+           <p> Please enter a valid email address.</p>
           </div>
-          <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
-        </form>
-      </div>
-      <!-- <div class="col col-md-4">
-        <div style="position: fixed">{{ preview }}</div>
-      </div> -->
+        </div>
+
+        <div class="mb-3">
+          <label for="userpassword" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            id="userpassword"
+            formControlName="userpassword"
+          />
+          <div *ngIf="userForm.get('userpassword')?.invalid && userForm.get('userpassword')?.touched">
+            <div *ngIf="userForm.get('userpassword')?.hasError('required')">
+              <p>Password is required.</p>
+            </div>
+            <div *ngIf="userForm.get('userpassword')?.hasError('minlength')">
+             <p> Password should be at least 8 characters long.</p>
+            </div>
+            <div *ngIf="userForm.get('userpassword')?.hasError('pattern')">
+            <p>  Password should contain at least one lowercase letter, one uppercase letter, and one digit.</p>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn" [disabled]="!userForm.valid">Submit</button>
+      </form>
     </div>
   </div>
+</div>

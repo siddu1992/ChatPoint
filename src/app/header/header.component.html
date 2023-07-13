@@ -1,14 +1,12 @@
-<header class="sticky-top bgc-primary shadow-sm p-2 ps-4 pe-4">
-    <div class="navbar navbar-dark  flex-fill d-flex">
+<header class="sticky-top bgc-primary shadow-sm p-2 px-2">
+    <div class="navbar navbar-dark flex-wrap">
         <div class="navbar-name">
             <!-- <div class="logo-img"><img src="assets/images/cp-logo.png" alt="logo"></div> -->
-            <h5 class="text-white"> {{name  | titlecase}}</h5>
-            
-            <input type="text" placeholder="Search" (input)="onSearch($event)" class="btn-no-outline p-2 text-dark rounded-2">
-
+            <h3 class="text-white"> {{name  | titlecase}}</h3>
         </div>
-        <i (click)="logout()" class="fa fa-power-off" aria-hidden="true" ngbTooltip="signout"></i>
+        <div class="navbar-menu d-flex align-items-center">
+            <input type="text" placeholder="Search" (input)="onSearch($event)" class="btn-no-outline p-2 text-dark rounded-2">
+            <i style="padding-left: 10px;" (click)="logout()" class="fa fa-power-off" aria-hidden="true" ngbTooltip="signout"></i>
+        </div>
     </div>
-   
-
 </header>
